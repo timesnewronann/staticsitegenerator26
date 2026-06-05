@@ -13,7 +13,7 @@ Images, in this format: ![alt text](url)
 
 class TextType(Enum):
     TEXT = "text"
-    BOLD_TEXT = "bold"
+    BOLD = "bold"
     ITALIC = "italic"
     CODE = "code"
     LINK = "link"
