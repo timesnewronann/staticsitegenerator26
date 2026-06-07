@@ -27,7 +27,7 @@ class HTMLNode():
 class LeafNode(HTMLNode):
 
     def __init__(self, tag, value, props=None):
-        super().__init__(tag, value, props)
+        super().__init__(tag, value, None, props)
 
     def to_html(self):
         # if the leaf node has no value raise a Value Error all nodes need a value
@@ -42,3 +42,24 @@ class LeafNode(HTMLNode):
 
     def __repr__(self):
         return f"HTMLNode({self.tag}, {self.value}, {self.props})"
+
+
+class ParentNode(HTMLNode):
+    def __init__(self, tag, children, props=None):
+        super().__init__(tag, None, children, props)
+
+    def to_html(self):
+        if self.tag is None:
+            raise ValueError("All parent nodes must have a tag.")
+
+        if self.children is None:
+            raise ValueError("All parent nodes need children.")
+
+        children_html = ""
+
+        for child in self.children:
+            children_html += child.to_html()
+
+        # if child is a parentNode, it will recurse
+
+        return f"<{self.tag}>{children_html}</{self.tag}>"
