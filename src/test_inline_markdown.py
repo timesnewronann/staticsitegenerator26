@@ -2,7 +2,7 @@ import unittest
 
 from htmlnode import HTMLNode, LeafNode, ParentNode
 from textnode import TextNode, TextType, text_node_to_html_node
-from inline import split_nodes_delimiter, split_nodes_image, split_nodes_link
+from inline import split_nodes_delimiter, split_nodes_image, split_nodes_link, text_to_textnodes
 
 
 class TestInline(unittest.TestCase):
@@ -80,6 +80,18 @@ class TestInline(unittest.TestCase):
             ],
             new_nodes
         )
+
+    def test_text_to_textnodes(self):
+        text = "This is **bold** text and an _italic_ word."
+        nodes = text_to_textnodes(text)
+        expected = [
+            TextNode("This is ", TextType.TEXT),
+            TextNode("bold", TextType.BOLD),
+            TextNode(" text and an ", TextType.TEXT),
+            TextNode("italic", TextType.ITALIC),
+            TextNode(" word.", TextType.TEXT),
+        ]
+        self.assertEqual(nodes, expected)
 
 
 if __name__ == "__main__":
